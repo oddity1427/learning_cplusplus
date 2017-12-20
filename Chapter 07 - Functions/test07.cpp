@@ -15,19 +15,20 @@ int read_int();
 //It should be noted that std::cin and std::cout do not play nice together while on the same line
 //when they are called they can flush data that was waiting to be printed.
 int main(){
-	std::cout << "Enter data signal as space delimited doubles\n";
-	std::vector<double> v = read_double_vector();
-	for(double e : v){
-		std::cout << e << " ";
-	}
-	std::cout << "\n";
-	
-	// std::cout << read_int();
-	// std::cout << "\n";
-	// std::cout << get_filter_width();
-	// std::cout << "\n";
-	//int width = get_filter_width();
 
+	//The following code is left as a record for what was ran in double_read_test.out
+	// std::cout << "Enter data signal as space delimited doubles\n";
+	// std::vector<double> v = read_double_vector();
+	// for(double e : v){
+	// 	std::cout << e << " ";
+	// }
+	// std::cout << "\n";
+
+	int example = read_int();
+	std::cout << example << "\n";
+
+	int width = get_filter_width();
+	std::cout << width << "\n";
 	
 	return 0;
 }
@@ -35,8 +36,7 @@ int main(){
 //gets the width of the filter to be applied
 //rounds up to the nearest positive, odd int, greater than 1 (a moving filter of width 1 is redundant)
 int get_filter_width(){
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 	std::cout << "enter the int width of the filter (should be odd and positive)\n";
 	int w = read_int();
 	if(w < 3){
@@ -54,8 +54,7 @@ int get_filter_width(){
 int read_int(){
 	std::cout << "enter int\n";
 	int num;
-	std::cin.clear();
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	
 	while(true){
 		if(std::cin >> num){
 			
@@ -67,6 +66,7 @@ int read_int(){
 			std::string s;
 			std::getline(std::cin,s);
 		}
+		std::cout << "\n";
 
 	}
 	
@@ -82,7 +82,6 @@ std::vector<double> read_double_vector(){
 	while(std::cin >> x){
 			input.push_back(x);
 	}
-	//return to next line so next print statement does not follow on same line as input
 	std::cout << "\n";
 
 	if(!std::cin.eof()){
