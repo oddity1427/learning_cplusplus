@@ -15,13 +15,17 @@ int read_int();
 //It should be noted that std::cin and std::cout do not play nice together while on the same line
 //when they are called they can flush data that was waiting to be printed.
 int main(){
-	//std::cout << "Enter data signal as space delimited doubles\n";
-	//std::vector<double> v = read_double_vector();
+	std::cout << "Enter data signal as space delimited doubles\n";
+	std::vector<double> v = read_double_vector();
+	for(double e : v){
+		std::cout << e << " ";
+	}
+	std::cout << "\n";
 	
-	std::cout << read_int();
-	std::cout << "\n";
-	std::cout << get_filter_width();
-	std::cout << "\n";
+	// std::cout << read_int();
+	// std::cout << "\n";
+	// std::cout << get_filter_width();
+	// std::cout << "\n";
 	//int width = get_filter_width();
 
 	
@@ -46,7 +50,7 @@ int get_filter_width(){
 
 //probably going to have to read ints in the future as well so might as well not duplicate writing this as well
 //has the problem that if the user has issues entering a number, will continuously expect one
-//given the scope of these problems, I don't think further error checking/user friendliness is needed
+//given the scope of these problems, I don't think further user friendliness is needed
 int read_int(){
 	std::cout << "enter int\n";
 	int num;
@@ -70,10 +74,10 @@ int read_int(){
 
 //I thought the way the example was set up was a litte bit messy
 //the while(true)+break seemed like a bit extra for what was effectively a single if() decision
-//simplified, removed success comment
+//simplified, modified to read in doubles
 std::vector<double> read_double_vector(){
 	std::vector<double> input;
-	int x;
+	double x;
 
 	while(std::cin >> x){
 			input.push_back(x);
