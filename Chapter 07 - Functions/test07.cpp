@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <iterator>
 
 std::vector<double> read_double_vector();
 int get_filter_width();
@@ -24,11 +25,43 @@ int main(){
 	// }
 	// std::cout << "\n";
 
-	int example = read_int();
-	std::cout << example << "\n";
+	//The following is commented as record of the code fun for filter_and_int_read_test.out
+	// int example = read_int();
+	// std::cout << example << "\n";
+	// int width = get_filter_width();
+	// std::cout << width << "\n";
 
+	//Actual moving filter algorithm here
+	//input
+	std::vector<double> data;
+	std::cout << "Enter the double data signal\n";
+	data = read_double_vector();
 	int width = get_filter_width();
-	std::cout << width << "\n";
+	int length = data.size();
+
+	//appropriately padding the data vector with 0s 
+	int padding = width/2;
+	for(int i = 0; i < padding; i++){
+		data.push_back(0);
+		data.insert(data.begin(),0);
+	}
+
+	//create filtered vector
+	std::vector<double> filtered;
+	double sum;
+	for(int i = padding; i < padding + length; i++){
+		sum = 0;
+		for(int j = i - padding; j < i + padding; j++ ){
+			sum += data[j];
+		}
+		filtered.push_back(sum / width); 
+	}
+
+	for(double d : filtered){
+		std::cout << d << " ";
+	}
+	std::cout << "\n";
+
 	
 	return 0;
 }
