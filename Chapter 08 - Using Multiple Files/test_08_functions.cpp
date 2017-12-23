@@ -26,12 +26,14 @@ std::vector<double> read_double_vector(std::string m){
 		std::getline(std::cin,s);
 		std::cout << "Error, following input not processed: " << s << "\n";
 	}
-
+	//clear the stream so this function can be called multiple times
+	std::cin.clear();
+    std::cin.ignore(10000,'\n');
 	return input;
 }
 
 std::vector<double> greater_vector(double level, std::vector<double> input){
-	double greater;
+	std::vector<double> greater;
 	for(double d : input){
 		if(d > level){
 			greater.push_back(d);
@@ -61,6 +63,7 @@ int read_int(std::string m){
 
 //moved from main(), probably should have been its own function before anyway
 std::vector<double> moving_average(std::vector<double> data, int filter_width){
+	int length = data.size();
 	//appropriately padding the data vector with 0s 
 	int padding = filter_width/2;
 	for(int i = 0; i < padding; i++){
@@ -77,7 +80,7 @@ std::vector<double> moving_average(std::vector<double> data, int filter_width){
 		for(int j = i - padding; j < i + padding; j++ ){
 			sum += data[j];
 		}
-		filtered.push_back(sum / width); 
+		filtered.push_back(sum / filter_width); 
 	}
 	return filtered;
 }

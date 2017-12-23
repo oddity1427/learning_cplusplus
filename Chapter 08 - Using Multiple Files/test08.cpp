@@ -4,6 +4,7 @@
 //Not super useful, but I figured I should add more complexity when I rewrite the same code.
 
 #include "test08.h"
+#include <iostream>
 
 int main(){
 	//This code was copy pasted from chapter 07 and then modified to work with the updates in structure in this chapter.
@@ -18,7 +19,6 @@ int main(){
 	std::string level_message = "enter filter threshold, only the first value will be recorded";
 	int threshold = read_int(level_message);
 
-	int length = data.size();
 
 	std::vector<double> mov_average = moving_average(data, width);
 
@@ -27,7 +27,7 @@ int main(){
 	}
 	std::cout << "\n";
 
-	std::vector<double> above_level = greater_vector(mov_average);
+	std::vector<double> above_level = greater_vector(threshold, mov_average);
 
 	for(double d : above_level){
 		std::cout << d << " ";
