@@ -39,8 +39,11 @@ std::vector<double> read_double_vector(std::string m){
 }
 
 //basically just takes the vector input and breaks it into iterators for the actual sorting
-std::vector<double> mergesort(std::vector<double>){
-
+std::vector<double> mergesort(std::vector<double> v){
+	while(!isSorted){
+		sort_implementation(v.start(), v.end());
+	}
+	return v;
 }
 
 //takes two iterators to sort between
@@ -55,17 +58,32 @@ void sort_implementation(iterator start, iterator end){
 
 //actually does the merging algorithm between two contiguous runs noted by 3 iterators
 //this is where this becomes a bit weird, as I have to sort into a vector and then copy back to the original with the iterators
+//There is definitely a way to use this to also check if the vector is sorted using the number of runs, If I was actually going to use this I would remove that inefficiency
 void sort_merging(iterator start, iterator mid, iterator end){
-
+	
 }
 
-//hleps sort_implementation, makes the code cleaner
+//helps sort_implementation, makes the code cleaner
 bool isSorted(iterator start, iterator end){
-
+	bool to_return = true;
+	while(start != end){
+		if(start* < (start - 1)*){
+			to_return = false;
+		}
+		start++;
+	}
+	return to_return;
 }
 
 //finds the end of the next run, is called a lot so separating to make cleaner
 iterator run_end(iterator start, end_itr){
-
+	//huh neat this is while(true){}
+	while(;){
+		if(start + 1 == end_itr || (start+1)* < start*){
+			return start + 1;
+		}
+		start++;
+	}
+	return start;
 }
 
