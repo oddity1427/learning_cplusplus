@@ -16,6 +16,6 @@ std::vector<double> mergesort(std::vector<double> v);
 void sort_implementation(iterator start, iterator end);
 void sort_merging(iterator start, iterator mid, iterator end);
 bool isSorted(iterator start, iterator end);
-iterator run_end(iterator start, end_itr);
+iterator run_end(iterator start, iterator end_itr);
 
 #endif

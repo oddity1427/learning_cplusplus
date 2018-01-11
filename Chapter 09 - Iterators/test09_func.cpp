@@ -38,7 +38,7 @@ std::vector<double> read_double_vector(std::string m){
 //basically just takes the vector input and breaks it into iterators for the actual sorting
 std::vector<double> mergesort(std::vector<double> v){
 	while(!isSorted){
-		sort_implementation(v.start(), v.end());
+		sort_implementation(v.begin(), v.end());
 	}
 	return v;
 }
@@ -52,17 +52,19 @@ std::vector<double> mergesort(std::vector<double> v){
 //not a  problem if implemented with mergesort above
 void sort_implementation(iterator start, iterator end){
 
-	bool savedRun == false
-	iterator nextEnd, lastStart, lastEnd;
-	lastEnd = start
+	bool savedRun = false;
+	iterator nextEnd;
+	iterator lastStart;
+	iterator lastEnd;
+	lastEnd = start;
 
-	while(;){
+	while(true){
 		nextEnd = run_end(lastEnd, end);
 
 		//It turns out that this will be true whether or not there is a previously saved run.
 		//If there is only 1 run, the vector is sorted and this will not be called so this will only ever be called with lastStart, LastEnd already defined if there are an odd number of runs
 		if(end - nextEnd < 1){			
-			sort_merging(lastStart, LastEnd, nextEnd);
+			sort_merging(lastStart, lastEnd, nextEnd);
 			return;
 		}
 
@@ -72,7 +74,7 @@ void sort_implementation(iterator start, iterator end){
 			lastEnd = nextEnd;					
 			savedRun = true;
 		}else{
-			sort_merging(lastStart, LastEnd, nextEnd);			
+			sort_merging(lastStart, lastEnd, nextEnd);			
 			lastStart = lastEnd;
 			lastEnd = nextEnd;
 			savedRun = false;
@@ -86,35 +88,45 @@ void sort_implementation(iterator start, iterator end){
 //this is where this becomes a bit weird, as I have to sort into a vector and then copy back to the original with the iterators
 //There is definitely a way to use this to also check if the vector is sorted using the number of runs, If I was actually going to use this I would remove that inefficiency
 void sort_merging(iterator start, iterator mid, iterator end){
-	iterator 1vecItr  = start;
-	iterator 2vecItr  = mid; 
+	iterator vec1Itr  = start;
+	iterator vec2Itr  = mid; 
 	std::vector<double> sorted;
 	while(sorted.size() < end - start){			//not all of the elements are merged yet
 
-		if(1vecItr - mid < 1){					//if one of the merge halfs is already exhausted, push the other one
-			sorted.push_back(2vecItr*);
-			2vecItr++;
-		}else if(2vecItr - end < 1){
-			sorted.push_back(1vecItr*);
-			1vecItr++;
+		if(vec1Itr - mid < 1){					//if one of the merge halfs is already exhausted, push the other one
+			sorted.push_back(*vec2Itr);
+			vec2Itr++;
+		}else if(vec2Itr - end < 1){
+			sorted.push_back(*vec1Itr);
+			vec1Itr++;
 		}
 
-		else if(1vecItr* < 2vecItr*){			//push from the half which has a lower value at the head
-			sorted.push_back(1vecItr*);
-			1vecItr++;
+		else if(*vec1Itr < *vec2Itr){			//push from the half which has a lower value at the head
+			sorted.push_back(*vec1Itr);
+			vec1Itr++;
 		}else{
-			sorted.push_back(2vecItr*);
-			2vecItr++;
+			sorted.push_back(*vec2Itr);
+			vec2Itr++;
 		}
+	}
+
+	for(double d : sorted){
+		*start = d;
+		start++;
 	}
 	
 }
 
 //helps sort_implementation, makes the code cleaner
 bool isSorted(iterator start, iterator end){
+	if(end-start == 1){
+		return true;
+	}
+
+	start++;
 	bool to_return = true;
-	while(start != end){
-		if(start* < (start - 1)*){
+	while(end - start > 0 ){
+		if(*start < *(start - 1)){
 			to_return = false;
 		}
 		start++;
@@ -123,10 +135,10 @@ bool isSorted(iterator start, iterator end){
 }
 
 //finds the end of the next run, is called a lot so separating to make cleaner
-iterator run_end(iterator start, end_itr){
-	//huh neat this is while(true){}
-	while(;){
-		if(start + 1 == end_itr || (start+1)* < start*){
+iterator run_end(iterator start, iterator end_itr){
+	
+	while(true){
+		if( end_itr - start > 1 || *(start+1) < *start){
 			return start + 1;
 		}
 		start++;

@@ -6,7 +6,8 @@
 #include <iostream>
 
 int main(){
-	std::vector<double> input = read_double_vector(std::string s = "Input space delimited doubles, ctrl+d to exit in terminal");
+	std::string s = "Input space delimited doubles, ctrl+d to exit in terminal";
+	std::vector<double> input = read_double_vector(s);
 	std::cout << "mergesort used to sort input, displayed sorted below";
 	std::vector<double> sorted = mergesort(input);
 	for(double d : sorted){
