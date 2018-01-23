@@ -4,6 +4,8 @@
 //I'm not trying to reinvent the wheel here for the purposes of a test, so I'm not going to try and implement an in place merge sort. 
 //as a result of this I'm going to create sub vectors during the sorting process, somewhat defeating the purpose though I am not going to access any data outside of dereferencing an iterator
 
+//had some problems bugfixing this due to me checking the place of the iterators in the wrong way. testing them with == turns out to make everything work as expected
+
 #include "test09_head.hpp"
 #include <iostream>
 //need to include iterators if we're going to use them
@@ -37,8 +39,10 @@ std::vector<double> read_double_vector(std::string m){
 
 //basically just takes the vector input and breaks it into iterators for the actual sorting
 std::vector<double> mergesort(std::vector<double> v){
-	while(!isSorted){
-		sort_implementation(v.begin(), v.end());
+	iterator start = v.begin();
+	iterator end = v.end();
+	while(!isSorted(start, end)){
+		sort_implementation(start, end);
 	}
 	return v;
 }
@@ -63,7 +67,7 @@ void sort_implementation(iterator start, iterator end){
 
 		//It turns out that this will be true whether or not there is a previously saved run.
 		//If there is only 1 run, the vector is sorted and this will not be called so this will only ever be called with lastStart, LastEnd already defined if there are an odd number of runs
-		if(end - nextEnd < 1){			
+		if(end == nextEnd){			
 			sort_merging(lastStart, lastEnd, nextEnd);
 			return;
 		}
@@ -93,10 +97,10 @@ void sort_merging(iterator start, iterator mid, iterator end){
 	std::vector<double> sorted;
 	while(sorted.size() < end - start){			//not all of the elements are merged yet
 
-		if(vec1Itr - mid < 1){					//if one of the merge halfs is already exhausted, push the other one
+		if(vec1Itr == mid){					//if one of the merge halfs is already exhausted, push the other one
 			sorted.push_back(*vec2Itr);
 			vec2Itr++;
-		}else if(vec2Itr - end < 1){
+		}else if(vec2Itr == end){
 			sorted.push_back(*vec1Itr);
 			vec1Itr++;
 		}
@@ -122,10 +126,9 @@ bool isSorted(iterator start, iterator end){
 	if(end-start == 1){
 		return true;
 	}
-
 	start++;
 	bool to_return = true;
-	while(end - start > 0 ){
+	while(end != start ){
 		if(*start < *(start - 1)){
 			to_return = false;
 		}
@@ -138,7 +141,7 @@ bool isSorted(iterator start, iterator end){
 iterator run_end(iterator start, iterator end_itr){
 	
 	while(true){
-		if( end_itr - start > 1 || *(start+1) < *start){
+		if( start + 1 == end_itr || *(start+1) < *start){
 			return start + 1;
 		}
 		start++;
