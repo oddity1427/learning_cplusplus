@@ -3,10 +3,10 @@
 //Because of the way I wrote most of the sorting functions to all use iterators, I don't think It's going to be that useful to try and work references into those functions
 
 
-#include "test09_head.hpp"
-#include <iostream>
-//need to include iterators if we're going to use them
+#include "test10.hpp"
 #include <iterator>
+//need to add string now that its not in the header
+#include <string>
 
 //being able to call on "stream" makes everything look alot cleaner in addition to being faster as a reference to cin
 //also nice that we do not have to call on cout really anymore
@@ -48,7 +48,8 @@ std::vector<double> mergesort(std::vector<double> v){
 //only doing it this way because the obvious example of quicksort is taken and this should be reasonably complex
 void sort_implementation(iterator start, iterator end){
 
-	if(sorted(start, end)){
+	//turns out you need to call a method you actually wrote
+	if(isSorted(start, end)){
 		return;
 	}
 
